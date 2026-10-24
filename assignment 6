@@ -1,0 +1,154 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *top = NULL;
+
+// Push operation
+void push(int value) {
+    struct Node *newNode =
+        (struct Node *)malloc(sizeof(struct Node));
+
+    if (newNode == NULL) {
+        printf("Memory allocation failed!\n");
+        return;
+    }
+
+    newNode->data = value;
+    newNode->next = top;
+    top = newNode;
+
+    printf("%d pushed to stack.\n", value);
+}
+
+// Pop operation
+void pop() {
+    if (top == NULL) {
+        printf("Stack Underflow!\n");
+        return;
+    }
+
+    struct Node *temp = top;
+    printf("Popped %d from stack.\n", top->data);
+
+    top = top->next;
+    free(temp);
+}
+
+// Display operation
+void display() {
+    struct Node *temp = top;
+
+    if (top == NULL) {
+        printf("Stack is empty.\n");
+        return;
+    }
+
+    printf("Stack elements: ");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    push(10);
+    push(20);
+    push(30);
+
+    display();
+    pop();
+    display();
+
+    return 0;
+}
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *front = NULL;
+struct Node *rear = NULL;
+
+// Enqueue operation
+void enqueue(int value) {
+    struct Node *newNode =
+        (struct Node *)malloc(sizeof(struct Node));
+
+    if (newNode == NULL) {
+        printf("Memory allocation failed!\n");
+        return;
+    }
+
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (rear == NULL) {
+        front = rear = newNode;
+    } else {
+        rear->next = newNode;
+        rear = newNode;
+    }
+
+    printf("%d inserted into queue.\n", value);
+}
+
+// Dequeue operation
+void dequeue() {
+    if (front == NULL) {
+        printf("Queue is empty!\n");
+        return;
+    }
+
+    struct Node *temp = front;
+    printf("%d deleted from queue.\n", front->data);
+
+    front = front->next;
+
+    if (front == NULL) {
+        rear = NULL;
+    }
+
+    free(temp);
+}
+
+// Display operation
+void display() {
+    struct Node *temp = front;
+
+    if (front == NULL) {
+        printf("Queue is empty.\n");
+        return;
+    }
+
+    printf("Queue elements: ");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+
+    display();
+    dequeue();
+    display();
+
+    return 0;
+}
